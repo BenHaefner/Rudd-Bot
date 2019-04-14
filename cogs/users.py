@@ -1,13 +1,14 @@
 import sqlite3
 from discord.ext import commands
 
+
 class Users(commands.Cog):
     
     def __init__(self, client):
         self.client = client
 
     @commands.command(name='score',
-                description="Saves a quote.",
+                description="Get a persons score.",
                 pass_context=True)
     async def score(self, context, *args):
         try:

@@ -12,6 +12,7 @@ class Quote(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.members = cogs.users.get_users()
+        cogs.users.refresh_users(client)
 
     @commands.command(name='grab',
                 description="Saves a quote.",
@@ -116,7 +117,7 @@ def getRandQuoteOfUsers(members, args):
 
     conn = sqlite3.connect('quotes.db')
     c = conn.cursor()
-    c.execute("SELECT * From quotes")
+    c.execute("SELECT * From quotes WHERE user = (?)", (args,))
     result = c.fetchall()
     result = result[random.randint(0, len(result) - 1)]
     result = ' '.join(result)
