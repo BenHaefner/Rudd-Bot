@@ -23,7 +23,6 @@ class Quote(commands.Cog):
             onNext = False
             history = await context.message.channel.history().flatten()
             for i, message in enumerate(history):
-                print(message)
                 if onNext is True:
                     author = str(message.author.id)
                     args = '<@' + author + '> ' + message.content.replace('grab ', '')
@@ -63,22 +62,6 @@ class Quote(commands.Cog):
             await context.message.channel.send('Something went wrong')
             print(e)
 
-    '''
-    @commands.command(name='deletequotes',
-                    description="delete all quotes.",
-                    pass_context=True)
-    async def deletequotes(self, context, *args):
-        try:
-            conn = sqlite3.connect('quotes.db')
-            c = conn.cursor()
-            c.execute("Delete From quotes")
-            conn.commit
-            conn.close()
-            await context.message.channel.send('Deleted')
-
-        except Exception as e:
-            print(e)
-    '''
 
 def addQuote(members, args):
     user = args.split()[0].strip()

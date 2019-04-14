@@ -1,6 +1,10 @@
 import sqlite3
 from discord.ext import commands
 
+# Database: quotes.db
+# Tables: users
+# cloumns: user, score
+
 
 class Users(commands.Cog):
     
@@ -19,6 +23,33 @@ class Users(commands.Cog):
         except Exception as e:
             await context.message.channel.send('Could not get that score')
             print(e)
+
+    @commands.command(name='++',
+                description="Get a persons score.",
+                pass_context=True)
+    async def inc(self, context, *args):
+        try:
+            if len(args) < 1:
+                await context.message.channel.send('Give me a user to work with man...')
+            else:
+                await context.message.channel.send(increment(args[0]))
+        except Exception as e:
+            await context.message.channel.send('Could not get that score')
+            print(e)
+    
+    @commands.command(name='--',
+                description="Get a persons score.",
+                pass_context=True)
+    async def dec(self, context, *args):
+        try:
+            if len(args) < 1:
+                await context.message.channel.send('Give me a user to work with man...')
+            else:
+                await context.message.channel.send(decrement(args[0]))
+        except Exception as e:
+            await context.message.channel.send('Could not get that score')
+            print(e)
+
 
 def refresh_users(client):
     try:
@@ -57,20 +88,46 @@ def get_users():
     except Exception as e:
         print(e)
 
-# TODO: Make work
 def get_users_score(args):
     try:
         conn = sqlite3.connect('quotes.db')
         c = conn.cursor()
         c.execute("SELECT score FROM users WHERE user = (?)", (args,))
-        result = c.fetchall()
+        result = c.fetchone()
         conn.close()
-        scores = []
-        for users in result:
-            scores.append(users[0])
-        return scores
+        return result[0]
     except Exception as e:
         print(e)
+
+def increment(args):
+    try:
+        conn = sqlite3.connect('quotes.db')
+        c = conn.cursor()
+        c.execute("SELECT score FROM users WHERE user = (?)", (args,))
+        result = int(c.fetchone()[0])
+        result = result + 1
+        c.execute("UPDATE users SET score = ? WHERE user = ?", (result, args,))
+        conn.commit()
+        conn.close()
+        return 'The score of ' + str(args) + ' is ' + str(result)
+    except Exception as e:
+        print(e)
+
+def decrement(args):
+    try:
+        conn = sqlite3.connect('quotes.db')
+        c = conn.cursor()
+        c.execute("SELECT score FROM users WHERE user = (?)", (args,))
+        result = int(c.fetchone()[0])
+        result = result - 1
+        c.execute("UPDATE users SET score = ? WHERE user = ?", (result, args,))
+        conn.commit()
+        conn.close()
+        return 'The score of ' + str(args) + ' is ' + str(result)
+    except Exception as e:
+        print(e)
+
+
 
 def setup(client):
     client.add_cog(Users(client))
