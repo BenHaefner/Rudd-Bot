@@ -50,6 +50,19 @@ class Users(commands.Cog):
             await context.message.channel.send('Could not get that score')
             print(e)
 
+    @commands.command(name='scores',
+                description="Get a persons score.",
+                pass_context=True)
+    async def scores(self, context):
+        try:
+            allScores = get_all_scores()
+            for scores in allScores:
+                if '<' in scores[0]:
+                    await context.message.channel.send(str(scores[0]) + ': ' + str(scores[1]))
+        except Exception as e:
+            await context.message.channel.send('Could not get that score')
+            print(e)
+
 
 def refresh_users(client):
     try:
@@ -85,6 +98,17 @@ def get_users():
         for users in result:
             user.append(users[0])
         return user
+    except Exception as e:
+        print(e)
+
+def get_all_scores():
+    try:
+        conn = sqlite3.connect('quotes.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM users")
+        result = c.fetchall()
+        conn.close()
+        return result
     except Exception as e:
         print(e)
 
