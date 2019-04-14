@@ -1,8 +1,8 @@
-import random, re, discord, sqlite3
+import random, re, discord, sqlite3, cogs.users
 from discord.ext import commands
 
-# Database = quotes.db
-# Table = quotes
+# Database: quotes.db
+# Tables: quotes, users
 # User column: user
 # Quote column: quote
 
@@ -11,6 +11,7 @@ class Quote(commands.Cog):
 
     def __init__(self, client):
         self.client = client
+        self.members = cogs.users.get_users()
 
     @commands.command(name='grab',
                 description="Saves a quote.",
@@ -23,9 +24,9 @@ class Quote(commands.Cog):
             for i, message in enumerate(history):
                 print(message)
                 if onNext is True:
-                    author = message.author.name
-                    args = '@' + author + ' ' + message.content.replace('grab ', '')
-                    await context.message.channel.send(addQuote(args))
+                    author = str(message.author.id)
+                    args = '<@' + author + '> ' + message.content.replace('grab ', '')
+                    await context.message.channel.send(addQuote(self.members,args))
                     break
                 if message.id == msg.id:
                     onNext = True
@@ -43,7 +44,7 @@ class Quote(commands.Cog):
                 await context.message.channel.send(getRandQuote())
             else:
                 msg = ' '.join(args)
-                await context.message.channel.send(addQuote(msg))
+                await context.message.channel.send(addQuote(self.members,msg))
 
         except Exception as e:
             print(e)
@@ -56,7 +57,7 @@ class Quote(commands.Cog):
             if (len(args) is None):
                 await context.message.channel.send('Specify a user to lookup a quote for.')
             else:
-                await context.message.channel.send(getRandQuoteOfUsers(args))
+                await context.message.channel.send(getRandQuoteOfUsers(self.members,args))
         except Exception as e:
             await context.message.channel.send('Something went wrong')
             print(e)
@@ -78,10 +79,14 @@ class Quote(commands.Cog):
             print(e)
     '''
 
-def addQuote(args):
+def addQuote(members, args):
     user = args.split()[0].strip()
     if "@" not in user:
         return "Quote could not be added, please include a user"
+    print(user)
+    print(members)
+    if user not in members:
+        return "That is not currently a member of this or any server I know."
     conn = sqlite3.connect('quotes.db')
     message = '"' + ' '.join(args.split()[1:]) + '"'
     q = (user,message)
@@ -103,9 +108,12 @@ def getRandQuote():
     return(result)
 
 
-def getRandQuoteOfUsers(args):
+def getRandQuoteOfUsers(members, args):
     if "@" not in args:
         return('That isnt a user!')
+    if args not in members:
+        return "That is not currently a member of this or any server I know."
+
     conn = sqlite3.connect('quotes.db')
     c = conn.cursor()
     c.execute("SELECT * From quotes")
@@ -115,6 +123,8 @@ def getRandQuoteOfUsers(args):
     conn.close()
     return(result)
 
+def set_users(users):
+    pass
 
 def setup(client):
     client.add_cog(Quote(client))
