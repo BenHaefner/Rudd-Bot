@@ -16,17 +16,6 @@ async def on_ready():
     print("Logged in as " + client.user.name)
 
 
-async def list_servers():
-    await client.wait_until_ready()
-    while not client.is_closed:
-        print("Current servers:")
-        for server in client.guilds:
-            print(str(server))
-        await asyncio.sleep(600)
-
-
-client.loop.create_task(list_servers())
-
 for extension in startup_extensions:
     try:
         client.load_extension('cogs.' + extension)
