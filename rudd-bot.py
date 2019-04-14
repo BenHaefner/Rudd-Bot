@@ -8,7 +8,7 @@ TOKEN = config.Token()
 
 client = Bot(command_prefix=BOT_PREFIX)
 
-startup_extensions = ["quote"]
+startup_extensions = ["quote", "users"]
 
 @client.event
 async def on_ready():

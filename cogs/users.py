@@ -1,6 +1,24 @@
 import sqlite3
 from discord.ext import commands
 
+class Users(commands.Cog):
+    
+    def __init__(self, client):
+        self.client = client
+
+    @commands.command(name='score',
+                description="Saves a quote.",
+                pass_context=True)
+    async def score(self, context, *args):
+        try:
+            if len(args) < 1:
+                await context.message.channel.send('Give me a user to work with man...')
+            else:
+                await context.message.channel.send(get_users_score(args[0]))
+        except Exception as e:
+            await context.message.channel.send('Could not get that score')
+            print(e)
+
 def refresh_users(client):
     try:
         users = get_users()
@@ -11,13 +29,13 @@ def refresh_users(client):
                 if membername not in users:
                     conn = sqlite3.connect('quotes.db')
                     c = conn.cursor()
-                    c.execute("INSERT INTO users VALUES (?,?)", (membername,0))
+                    c.execute("INSERT INTO users VALUES (?,?)", (membername,0,))
                     conn.commit()
                     conn.close()
                 if memberid not in users:
                     conn = sqlite3.connect('quotes.db')
                     c = conn.cursor()
-                    c.execute("INSERT INTO users VALUES (?,?)", (memberid,0))
+                    c.execute("INSERT INTO users VALUES (?,?)", (memberid,0,))
                     conn.commit()
                     conn.close()
     except Exception as e:
@@ -37,6 +55,7 @@ def get_users():
         return user
     except Exception as e:
         print(e)
+
 # TODO: Make work
 def get_users_score(args):
     try:
@@ -53,4 +72,5 @@ def get_users_score(args):
         print(e)
 
 def setup(client):
-    pass
+    client.add_cog(Users(client))
+
