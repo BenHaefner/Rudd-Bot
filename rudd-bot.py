@@ -16,6 +16,8 @@ async def on_ready():
     print("Logged in as " + client.user.name)
 
 
+
+
 for extension in startup_extensions:
     try:
         client.load_extension('cogs.' + extension)
