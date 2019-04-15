@@ -5,12 +5,12 @@ This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), 
 
 ## Commands
 - $quote: Gets a random quote from the quote database.
-- $quote `mention user` `text`: Adds a quote to the database attibuted to a specific person.
+- $quote `mention` `text`: Adds a quote to the database attibuted to a specific person.
 - $grab: Adds the last message sent before this command to the quote database.
-- $lookup `mention user`: Gets a random quote from the quote database attributed to the user mentioned.
-- $score `mention user`: Retrieves the score of a specific user.
-- $++ `mention user`: Increases the score of a specific user by one.
-- $-- `mention user`: Decreases the score of a specific user by one.
+- $lookup `mention`: Gets a random quote from the quote database attributed to the user mentioned.
+- $score `mention`: Retrieves the score of a specific user.
+- $++ `mention`: Increases the score of a specific user by one.
+- $-- `mention`: Decreases the score of a specific user by one.
 - $scores: Gets a list of scores for everyone in the database.
 - $add_task `keyword` `text`: Adds a task to the database accessible through the keyword.
 - $lookup_task `keyword`: Gets the text associated with a task.
