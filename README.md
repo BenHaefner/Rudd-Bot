@@ -17,14 +17,15 @@ This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), 
 - $list_tasks: Lists all the task keywords.
 - $end_task <keyword>: Deletes the task associated with a keyword.
 
-
-### Tasks Complete
+## Work
+### Features Complete
 - Quote Saving and Selection
    - Using SQL
 - User Scoring System
 - The ability to store "tasks" and retrieve those tasks based on a single word key.
 
-### Current Tasks To Implement
+### Current Features To Implement
+ - Quote numbering
  - Name Requirement Enforcement
  - Server Analytics
  - Server-Based Games (Family Fued)
