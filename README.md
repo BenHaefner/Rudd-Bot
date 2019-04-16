@@ -3,6 +3,8 @@ A Discord bot to do various tasks on my discord server, themed loosley around th
 
 This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), a bot developed for use in Slack. This bot is able to retain quotes from people in the chat as well as score users. Rudd-Bot's implementation of these features are slightly different. Additionally I was interested in adding in more functionality on top of that enabled by dxbot.
 
+This bot is part of a personal project to become better about applying coding knowledge and skills to improve my every day life and make something to benefit myself and my friends.
+
 ## Commands
 - $quote: Gets a random quote from the quote database.
 - $quote `mention` `text`: Adds a quote to the database attibuted to a specific person.
@@ -32,11 +34,13 @@ This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), 
  - Name Requirement Enforcement
  - Server Analytics
    - Optional for now
-
  - Server-Based Games (Family Fued)
  - Ensure database associated people, tasks, scores, and anything else with specific servers. 
    - Optional for now
  - Implement a "Thanos" feature for fun.
    - Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
+   
+### Other Maintence
+- Comment everything
 
 
