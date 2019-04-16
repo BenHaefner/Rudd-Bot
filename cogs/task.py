@@ -55,7 +55,7 @@ class Task(commands.Cog):
 
 def lookupTasks():
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT name FROM task")
         result = c.fetchall()
@@ -69,7 +69,7 @@ def lookupTasks():
 
 def lookupTask(args):
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT description FROM task WHERE name = (?)", (args,))
         result = c.fetchall()
@@ -82,7 +82,7 @@ def addTask(args):
     try:
         name = args[0]
         desc =  ' '.join(args[1:])
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("INSERT INTO task VALUES (?,?)", (name,desc,))
         conn.commit()
@@ -93,7 +93,7 @@ def addTask(args):
 
 def endTask(args):
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("DELETE FROM task WHERE name = (?)", (args,))
         conn.commit()

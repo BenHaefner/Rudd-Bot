@@ -1,7 +1,7 @@
 import random, re, discord, sqlite3, cogs.users
 from discord.ext import commands
 
-# Database: quotes.db
+# Database: rudd.db
 # Tables: quotes, users
 # User column: user
 # Quote column: quote
@@ -71,7 +71,7 @@ def addQuote(members, args):
     print(members)
     if user not in members:
         return "That is not currently a member of this or any server I know."
-    conn = sqlite3.connect('quotes.db')
+    conn = sqlite3.connect('rudd.db')
     message = '"' + ' '.join(args.split()[1:]) + '"'
     q = (user,message)
     c = conn.cursor()
@@ -82,7 +82,7 @@ def addQuote(members, args):
 
 
 def getRandQuote():
-    conn = sqlite3.connect('quotes.db')
+    conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
     c.execute("SELECT * From quotes")
     result = c.fetchall()
@@ -98,7 +98,7 @@ def getRandQuoteOfUsers(members, args):
     if args not in members:
         return "That is not currently a member of this or any server I know."
 
-    conn = sqlite3.connect('quotes.db')
+    conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
     c.execute("SELECT * From quotes WHERE user = (?)", (args,))
     result = c.fetchall()

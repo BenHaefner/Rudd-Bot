@@ -1,7 +1,7 @@
 import sqlite3
 from discord.ext import commands
 
-# Database: quotes.db
+# Database: rudd.db
 # Tables: users
 # cloumns: user, score
 
@@ -72,13 +72,13 @@ def refresh_users(client):
                 membername = '@' + member.name
                 memberid = '<@' + str(member.id) +'>'
                 if membername not in users:
-                    conn = sqlite3.connect('quotes.db')
+                    conn = sqlite3.connect('rudd.db')
                     c = conn.cursor()
                     c.execute("INSERT INTO users VALUES (?,?)", (membername,0,))
                     conn.commit()
                     conn.close()
                 if memberid not in users:
-                    conn = sqlite3.connect('quotes.db')
+                    conn = sqlite3.connect('rudd.db')
                     c = conn.cursor()
                     c.execute("INSERT INTO users VALUES (?,?)", (memberid,0,))
                     conn.commit()
@@ -89,7 +89,7 @@ def refresh_users(client):
 
 def get_users():
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT user FROM users")
         result = c.fetchall()
@@ -103,7 +103,7 @@ def get_users():
 
 def get_all_scores():
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT * FROM users")
         result = c.fetchall()
@@ -114,7 +114,7 @@ def get_all_scores():
 
 def get_users_score(args):
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT score FROM users WHERE user = (?)", (args,))
         result = c.fetchone()
@@ -125,7 +125,7 @@ def get_users_score(args):
 
 def increment(args):
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT score FROM users WHERE user = (?)", (args,))
         result = int(c.fetchone()[0])
@@ -139,7 +139,7 @@ def increment(args):
 
 def decrement(args):
     try:
-        conn = sqlite3.connect('quotes.db')
+        conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute("SELECT score FROM users WHERE user = (?)", (args,))
         result = int(c.fetchone()[0])

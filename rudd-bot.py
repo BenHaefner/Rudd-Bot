@@ -8,14 +8,14 @@ TOKEN = config.Token()
 
 client = Bot(command_prefix=BOT_PREFIX)
 
-startup_extensions = ["quote", "users", "task"]
+startup_extensions = ["quote", "users", "task", "admin"]
 
 @client.event
 async def on_ready():
     await client.change_presence(activity=Game(name=" Bobby Newport in P&R"))
     print("Logged in as " + client.user.name)
     users.refresh_users(client)
-        
+
 
 for extension in startup_extensions:
     try:

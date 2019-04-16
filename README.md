@@ -16,6 +16,7 @@ This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), 
 - $lookup_task `keyword`: Gets the text associated with a task.
 - $list_tasks: Lists all the task keywords.
 - $end_task `keyword`: Deletes the task associated with a keyword.
+- $pin: Pins the last comment. Requires 'manage messages' permissions.
 
 ## Work
 ### Features Complete
@@ -23,14 +24,18 @@ This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), 
    - Using SQL
 - User Scoring System
 - The ability to store "tasks" and retrieve those tasks based on a single word key.
+- Pin comments
+
 
 ### Current Features To Implement
  - Quote numbering
  - Name Requirement Enforcement
  - Server Analytics
+   - Optional for now
+
  - Server-Based Games (Family Fued)
- - Pin comments
- - Ensure database associated people, tasks, scores, and anything else with specific servers.
+ - Ensure database associated people, tasks, scores, and anything else with specific servers. 
+   - Optional for now
  - Implement a "Thanos" feature for fun.
    - Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
 
