@@ -70,8 +70,6 @@ def addQuote(members, args):
     user = args.split()[0].strip().replace('!','')
     if "@" not in user:
         return "Quote could not be added, please include a user"
-    print(user)
-    print(members)
     if user not in members:
         return "That is not currently a member of this or any server I know."
     conn = sqlite3.connect('rudd.db')
@@ -90,7 +88,9 @@ def getRandQuote():
     c.execute("SELECT * From quotes")
     result = c.fetchall()
     result = result[random.randint(0, len(result) - 1)]
-    result = ' '.join(result)
+    name = cogs.users.get_name_from_id(result[0])
+    message = ' '.join(result[1:])
+    result = name + ": " + message
     conn.close()
     return(result)
 
@@ -107,7 +107,9 @@ def getRandQuoteOfUsers(members, args):
     c.execute("SELECT * From quotes WHERE user = (?)", (args,))
     result = c.fetchall()
     result = result[random.randint(0, len(result) - 1)]
-    result = ' '.join(result)
+    name = cogs.users.get_name_from_id(result[0])
+    message = ' '.join(result[1:])
+    result = name + ": " + message
     conn.close()
     return(result)
 

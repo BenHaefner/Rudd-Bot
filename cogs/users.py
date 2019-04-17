@@ -153,6 +153,18 @@ def decrement(args):
     except Exception as e:
         print(e)
 
+def get_name_from_id(id):
+    try:
+        conn = sqlite3.connect('rudd.db')
+        c = conn.cursor()
+        c.execute("SELECT name FROM users WHERE user = (?)", (id,))
+        result = c.fetchone()[0]
+        conn.close()
+        return result
+    except Exception as e:
+        print(e)
+        return id
+
 
 
 def setup(client):
