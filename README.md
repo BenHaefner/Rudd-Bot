@@ -30,22 +30,26 @@ This bot is part of a personal project to become better about applying coding kn
 - The ability to store "tasks" and retrieve those tasks based on a single word key.
 - Pin comments
 - Name requirement enforcement
+- On user join, add user to the user list if they arent already there.
 
 
-### Current Features To Implement
+### Features To Implement
+- More "Paul Rudd"-esque interations
 - Quote numbering
+  - Optional for now
 - Server analytics
 - Server-based games (Family Fued)
 - Ensure database associated people, tasks, scores, and anything else with specific servers. 
    - Optional for now
 - A "Thanos" feature for fun.
-- Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
-- On user join, add user to the user list if they arent already there.
+  - Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
 
 
 ### Other Maintence
 - Comment everything
 - Speed up '$scores' function
+  - It only sends 6 messages at once and waits a few seconds to send more.
+  - I think this might just be a limitation in discord.
 - Fix styling so things are more consistent
 
 

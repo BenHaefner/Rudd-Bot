@@ -87,7 +87,7 @@ def addTask(args):
         c.execute("INSERT INTO task VALUES (?,?)", (name,desc,))
         conn.commit()
         conn.close()
-        return 'Quote added.'
+        return 'Task added.'
     except Exception as e:
         print(e)
 
