@@ -42,5 +42,8 @@ This bot is part of a personal project to become better about applying coding kn
    
 ### Other Maintence
 - Comment everything
+- Speed up '$scores' function
+- Fix styling so things are more consistent
+
 
 
