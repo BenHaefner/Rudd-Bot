@@ -3,7 +3,7 @@ from discord.ext import commands
 
 # Database: rudd.db
 # Tables: users
-# cloumns: user, score
+# cloumns: user, score, name
 
 
 class Users(commands.Cog):
@@ -32,6 +32,10 @@ class Users(commands.Cog):
             if len(args) < 1:
                 await context.message.channel.send('Give me a user to work with man...')
             else:
+                id = '<@' + str(context.message.author.id) + '>'
+                if id == str(args[0]):
+                    await context.message.channel.send('Hey man, dont increase your own score. Not cool...')
+                    return
                 await context.message.channel.send(increment(args[0]))
         except Exception as e:
             await context.message.channel.send('Could not get that score')
@@ -45,6 +49,10 @@ class Users(commands.Cog):
             if len(args) < 1:
                 await context.message.channel.send('Give me a user to work with man...')
             else:
+                id = '<@' + str(context.message.author.id) + '>'
+                if id == str(args[0]):
+                    await context.message.channel.send('Hey man, dont increase your own score. Have confidence!')
+                    return
                 await context.message.channel.send(decrement(args[0]))
         except Exception as e:
             await context.message.channel.send('Could not get that score')
