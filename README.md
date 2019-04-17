@@ -24,22 +24,21 @@ This bot is part of a personal project to become better about applying coding kn
 
 ## Work
 ### Features Complete
-- Quote Saving and Selection
+- Quote saving and selection
    - Using SQL
-- User Scoring System
+- User scoring system
 - The ability to store "tasks" and retrieve those tasks based on a single word key.
 - Pin comments
-- Name Requirement Enforcement
+- Name requirement enforcement
 
 
 ### Current Features To Implement
  - Quote numbering
- - Server Analytics
-   - Optional for now
- - Server-Based Games (Family Fued)
+ - Server analytics
+ - Server-based games (Family Fued)
  - Ensure database associated people, tasks, scores, and anything else with specific servers. 
    - Optional for now
- - Implement a "Thanos" feature for fun.
+ - A "Thanos" feature for fun.
    - Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
 
 
