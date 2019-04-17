@@ -5,6 +5,7 @@ This bot is partially based on [dxbot](https://github.com/crypticism/dxbot2.0), 
 
 This bot is part of a personal project to become better about applying coding knowledge and skills to improve my every day life and make something to benefit myself and my friends.
 
+
 ## Commands
 - $quote: Gets a random quote from the quote database.
 - $quote `mention` `text`: Adds a quote to the database attibuted to a specific person.
@@ -20,6 +21,7 @@ This bot is part of a personal project to become better about applying coding kn
 - $end_task `keyword`: Deletes the task associated with a keyword.
 - $pin: Pins the last comment. Requires 'manage messages' permissions.
 
+
 ## Work
 ### Features Complete
 - Quote Saving and Selection
@@ -27,11 +29,11 @@ This bot is part of a personal project to become better about applying coding kn
 - User Scoring System
 - The ability to store "tasks" and retrieve those tasks based on a single word key.
 - Pin comments
+- Name Requirement Enforcement
 
 
 ### Current Features To Implement
  - Quote numbering
- - Name Requirement Enforcement
  - Server Analytics
    - Optional for now
  - Server-Based Games (Family Fued)
@@ -39,7 +41,8 @@ This bot is part of a personal project to become better about applying coding kn
    - Optional for now
  - Implement a "Thanos" feature for fun.
    - Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
-   
+
+
 ### Other Maintence
 - Comment everything
 - Speed up '$scores' function

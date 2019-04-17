@@ -16,6 +16,12 @@ async def on_ready():
     print("Logged in as " + client.user.name)
     users.refresh_users(client)
 
+@client.event
+async def on_member_join(member):
+    await member.edit(nick = 'Unkown (' + member.name + ')')
+    await member.guild.text_channels[0].send('Hey there! I changed your nickname. This' + 
+    ' server has a strict nicknaming policy to avoid confusion. The format is "FirstName LastInitial (Username)"')
+
 
 for extension in startup_extensions:
     try:
