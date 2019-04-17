@@ -19,6 +19,7 @@ class Quote(commands.Cog):
                 pass_context=True)
     async def grab(self, context):
         try:
+            self.members = cogs.users.get_users()
             msg = context.message
             onNext = False
             history = await context.message.channel.history().flatten()
@@ -40,6 +41,7 @@ class Quote(commands.Cog):
                     pass_context=True)
     async def quote(self, context, *args):
         try:
+            self.members = cogs.users.get_users()
             if (len(args) is 0):
                 await context.message.channel.send(getRandQuote())
             else:
@@ -54,6 +56,7 @@ class Quote(commands.Cog):
                 pass_context=True)
     async def lookup(self, context, args):
         try:
+            self.members = cogs.users.get_users()
             if (len(args) is None):
                 await context.message.channel.send('Specify a user to lookup a quote for.')
             else:
@@ -64,7 +67,7 @@ class Quote(commands.Cog):
 
 
 def addQuote(members, args):
-    user = args.split()[0].strip()
+    user = args.split()[0].strip().replace('!','')
     if "@" not in user:
         return "Quote could not be added, please include a user"
     print(user)
@@ -93,6 +96,7 @@ def getRandQuote():
 
 
 def getRandQuoteOfUsers(members, args):
+    args = args.replace('!','')
     if "@" not in args:
         return('That isnt a user!')
     if args not in members:
