@@ -33,13 +33,14 @@ This bot is part of a personal project to become better about applying coding kn
 
 
 ### Current Features To Implement
- - Quote numbering
- - Server analytics
- - Server-based games (Family Fued)
- - Ensure database associated people, tasks, scores, and anything else with specific servers. 
-   - Optional for now
- - A "Thanos" feature for fun.
-   - Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
+- Quote numbering
+- Server analytics
+- Server-based games (Family Fued)
+- Ensure database associated people, tasks, scores, and anything else with specific servers. 
+- Optional for now
+- A "Thanos" feature for fun.
+- Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.
+- On user join, add user to the user list if they arent already there.
 
 
 ### Other Maintence
