@@ -47,8 +47,8 @@ class Quote(commands.Cog):
             else:
                 msg = ' '.join(args)
                 await context.message.channel.send(addQuote(self.members,msg))
-
         except Exception as e:
+            await context.message.channel('You are doing something unsafe. If you have an apostraphy or quotation mark... I dont like that shit.')
             print(e)
     
     @commands.command(name='lookup',
