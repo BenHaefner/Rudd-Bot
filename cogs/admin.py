@@ -38,7 +38,7 @@ class Admin(commands.Cog):
                 pass_context=True)
     async def pin(self, context):
         try:
-            texts = commands_text
+            texts = commands_text()
             for text in texts:
                 await context.message.channel.send(text)
         except Exception as e:
