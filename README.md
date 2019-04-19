@@ -7,6 +7,7 @@ This bot is part of a personal project to become better about applying coding kn
 
 
 ## Commands
+- $commands: Gets a list of commands
 - $quote: Gets a random quote from the quote database.
 - $quote `mention` `text`: Adds a quote to the database attibuted to a specific person.
 - $grab: Adds the last message sent before this command to the quote database.
