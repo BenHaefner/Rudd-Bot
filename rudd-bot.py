@@ -10,6 +10,8 @@ client = Bot(command_prefix=BOT_PREFIX)
 
 startup_extensions = ["quote", "users", "task", "admin"]
 
+last_updated_member = discord.Member
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=Game(name='Bobby Newport in P&R'))
@@ -25,18 +27,23 @@ async def on_member_join(member):
 
 @client.event
 async def on_member_update(before, after):
-    if(before.activity is not None):
-        if(type(before.activity) is discord.Spotify):
-            print(before.activity.title)
-        elif(type(before.activity) is discord.Game):
-            print(before.activity.start)
-            print(before.activity.end)
-        elif(type(before.activity) is discord.Streaming):
-            print('Is Streaming')
-        elif(type(before.activity) is discord.Activity):
-            print(before.activity.timestamps)
-        else:
-            print(before.activity)
+    try:
+        global last_updated_member
+        if(last_updated_member.name != before.name or last_updated_member.activity != before.activity):
+            if(before.activity is not None):
+                if(type(before.activity) is discord.Spotify):
+                    print(before.activity.title)
+                elif(type(before.activity) is discord.Game):
+                    print(before.activity.name)
+                elif(type(before.activity) is discord.Streaming):
+                    print('Is Streaming')
+                elif(type(before.activity) is discord.Activity):
+                    print(before.activity.name)
+                else:
+                    print(before.activity)
+        last_updated_member = before
+    except:
+        last_updated_member = before
 
 for extension in startup_extensions:
     try:
