@@ -23,6 +23,20 @@ async def on_member_join(member):
     ' server has a strict nicknaming policy to avoid confusion. The format is "FirstName LastInitial (Username)"')
     users.refresh_users(client)
 
+@client.event
+async def on_member_update(before, after):
+    if(before.activity is not None):
+        if(type(before.activity) is discord.Spotify):
+            print(before.activity.title)
+        elif(type(before.activity) is discord.Game):
+            print(before.activity.start)
+            print(before.activity.end)
+        elif(type(before.activity) is discord.Streaming):
+            print('Is Streaming')
+        elif(type(before.activity) is discord.Activity):
+            print(before.activity.timestamps)
+        else:
+            print(before.activity)
 
 for extension in startup_extensions:
     try:

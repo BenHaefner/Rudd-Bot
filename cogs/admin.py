@@ -44,6 +44,7 @@ class Admin(commands.Cog):
         except Exception as e:
             await context.message.channel.send('Could not get commands')
             print(e)
+    
 
 def commands_text():
     return ['Every command is proceeded by a "$"'
@@ -63,4 +64,3 @@ def commands_text():
 
 def setup(client):
     client.add_cog(Admin(client))
-

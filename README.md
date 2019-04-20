@@ -52,6 +52,3 @@ This bot is part of a personal project to become better about applying coding kn
 - Speed up '$scores' function
   - It only sends 6 messages at once and waits a few seconds to send more.
   - I think this might just be a limitation in discord.
-
-
-

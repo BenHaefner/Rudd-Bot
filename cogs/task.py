@@ -15,7 +15,7 @@ class Task(commands.Cog):
                 pass_context=True)
     async def add_task(self, context, *args):
         try:
-            await context.message.channel.send(addTask(args))
+            await context.message.channel.send(add_task(args))
         except Exception as e:
             await context.message.channel.send('Task could not be saved.')
             print(e)
@@ -26,7 +26,7 @@ class Task(commands.Cog):
                 pass_context=True)
     async def lookup_task(self, context, args):
         try:
-            await context.message.channel.send(lookupTask(args))
+            await context.message.channel.send(lookup_task(args))
         except Exception as e:
             await context.message.channel.send('Task could not be retrieved.')
             print(e)
@@ -36,7 +36,7 @@ class Task(commands.Cog):
                 pass_context=True)
     async def list_tasks(self, context):
         try:
-            tasks = lookupTasks()   
+            tasks = lookup_tasks()   
             for task in tasks:
                 await context.message.channel.send(task)
         except Exception as e:
@@ -48,12 +48,12 @@ class Task(commands.Cog):
                 pass_context=True)
     async def end_task(self, context, args):
         try:
-            await context.message.channel.send(endTask(args))
+            await context.message.channel.send(end_task(args))
         except Exception as e:
             await context.message.channel.send('Task could not be deleted.')
             print(e)
 
-def lookupTasks():
+def lookup_tasks():
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
@@ -67,7 +67,7 @@ def lookupTasks():
     except Exception as e:
         print(e)
 
-def lookupTask(args):
+def lookup_task(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
@@ -78,7 +78,7 @@ def lookupTask(args):
     except Exception as e:
         print(e)
 
-def addTask(args):
+def add_task(args):
     try:
         name = args[0]
         desc =  ' '.join(args[1:])
@@ -91,7 +91,7 @@ def addTask(args):
     except Exception as e:
         print(e)
 
-def endTask(args):
+def end_task(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()

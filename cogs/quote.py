@@ -27,7 +27,7 @@ class Quote(commands.Cog):
                 if onNext is True:
                     author = str(message.author.id)
                     args = '<@' + author + '> ' + message.content.replace('grab ', '')
-                    await context.message.channel.send(addQuote(self.members,args))
+                    await context.message.channel.send(add_quote(self.members,args))
                     break
                 if message.id == msg.id:
                     onNext = True
@@ -43,10 +43,10 @@ class Quote(commands.Cog):
         try:
             self.members = cogs.users.get_users()
             if (len(args) is 0):
-                await context.message.channel.send(getRandQuote())
+                await context.message.channel.send(get_rand_quote())
             else:
                 msg = ' '.join(args)
-                await context.message.channel.send(addQuote(self.members,msg))
+                await context.message.channel.send(add_quote(self.members,msg))
         except Exception as e:
             await context.message.channel('You are doing something unsafe. If you have an apostraphy or quotation mark... I dont like that shit.')
             print(e)
@@ -60,13 +60,13 @@ class Quote(commands.Cog):
             if (len(args) is None):
                 await context.message.channel.send('Specify a user to lookup a quote for.')
             else:
-                await context.message.channel.send(getRandQuoteOfUsers(self.members,args))
+                await context.message.channel.send(get_rand_quote_of_user(self.members,args))
         except Exception as e:
             await context.message.channel.send('Something went wrong')
             print(e)
 
 
-def addQuote(members, args):
+def add_quote(members, args):
     user = args.split()[0].strip().replace('!','')
     if "@" not in user:
         return 'Quote could not be added, please include a user'
@@ -82,7 +82,7 @@ def addQuote(members, args):
     return 'Quote added.'
 
 
-def getRandQuote():
+def get_rand_quote():
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
     c.execute('SELECT * From quotes')
@@ -95,7 +95,7 @@ def getRandQuote():
     return result 
 
 
-def getRandQuoteOfUsers(members, args):
+def get_rand_quote_of_user(members, args):
     args = args.replace('!','')
     if "@" not in args:
         return 'That isnt a user!'
