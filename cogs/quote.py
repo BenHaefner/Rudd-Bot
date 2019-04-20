@@ -15,7 +15,7 @@ class Quote(commands.Cog):
         cogs.users.refresh_users(client)
 
     @commands.command(name='grab',
-                description="Saves a quote.",
+                description='Saves the last message send.',
                 pass_context=True)
     async def grab(self, context):
         try:
@@ -37,7 +37,7 @@ class Quote(commands.Cog):
 
 
     @commands.command(name='quote',
-                    description="Get a quote.",
+                    description='Get a quote, or quote a user.',
                     pass_context=True)
     async def quote(self, context, *args):
         try:
@@ -52,7 +52,7 @@ class Quote(commands.Cog):
             print(e)
     
     @commands.command(name='lookup',
-                description="Saves a quote.",
+                description='Gets a users quote.',
                 pass_context=True)
     async def lookup(self, context, args):
         try:
@@ -69,14 +69,14 @@ class Quote(commands.Cog):
 def addQuote(members, args):
     user = args.split()[0].strip().replace('!','')
     if "@" not in user:
-        return "Quote could not be added, please include a user"
+        return 'Quote could not be added, please include a user'
     if user not in members:
-        return "That is not currently a member of this or any server I know."
+        return 'That is not currently a member of this or any server I know.'
     conn = sqlite3.connect('rudd.db')
     message = '"' + ' '.join(args.split()[1:]) + '"'
     q = (user,message)
     c = conn.cursor()
-    c.execute("INSERT INTO quotes VALUES (?,?)", q)
+    c.execute('INSERT INTO quotes VALUES (?,?)', q)
     conn.commit()
     conn.close()
     return 'Quote added.'
@@ -85,33 +85,32 @@ def addQuote(members, args):
 def getRandQuote():
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
-    c.execute("SELECT * From quotes")
+    c.execute('SELECT * From quotes')
     result = c.fetchall()
     result = result[random.randint(0, len(result) - 1)]
     name = cogs.users.get_name_from_id(result[0])
     message = ' '.join(result[1:])
     result = name + ": " + message
     conn.close()
-    return(result)
+    return result 
 
 
 def getRandQuoteOfUsers(members, args):
     args = args.replace('!','')
     if "@" not in args:
-        return('That isnt a user!')
+        return 'That isnt a user!'
     if args not in members:
-        return "That is not currently a member of this or any server I know."
-
+        return 'That is not currently a member of this or any server I know.'
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
-    c.execute("SELECT * From quotes WHERE user = (?)", (args,))
+    c.execute('SELECT * From quotes WHERE user = (?)', (args,))
     result = c.fetchall()
     result = result[random.randint(0, len(result) - 1)]
     name = cogs.users.get_name_from_id(result[0])
     message = ' '.join(result[1:])
     result = name + ": " + message
     conn.close()
-    return(result)
+    return result
 
 def set_users(users):
     pass

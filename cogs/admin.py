@@ -15,7 +15,7 @@ class Admin(commands.Cog):
         cogs.users.refresh_users(client)
 
     @commands.command(name='pin',
-                description="Pins a message.",
+                description='Pins a message.',
                 pass_context=True)
     async def pin(self, context):
         try:
@@ -25,7 +25,7 @@ class Admin(commands.Cog):
             for i, message in enumerate(history):
                 if onNext is True:
                     await message.pin()
-                    await context.message.channel.send("Message has been pinned!")
+                    await context.message.channel.send('Message has been pinned!')
                     break
                 if message.id == msg.id:
                     onNext = True
@@ -34,9 +34,9 @@ class Admin(commands.Cog):
             print(e)
 
     @commands.command(name='commands',
-                description="Print list of commands.",
+                description='Print list of commands.',
                 pass_context=True)
-    async def pin(self, context):
+    async def commands(self, context):
         try:
             texts = commands_text()
             for text in texts:

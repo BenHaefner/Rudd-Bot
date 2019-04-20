@@ -11,7 +11,7 @@ class Task(commands.Cog):
         self.client = client
 
     @commands.command(name='add_task',
-                description="Saves a quote.",
+                description='Saves a task.',
                 pass_context=True)
     async def add_task(self, context, *args):
         try:
@@ -22,7 +22,7 @@ class Task(commands.Cog):
 
     
     @commands.command(name='lookup_task',
-                description="Saves a quote.",
+                description='Gets a quote.',
                 pass_context=True)
     async def lookup_task(self, context, args):
         try:
@@ -32,7 +32,7 @@ class Task(commands.Cog):
             print(e)
 
     @commands.command(name='list_tasks',
-                description="Saves a quote.",
+                description='Lists all tasks.',
                 pass_context=True)
     async def list_tasks(self, context):
         try:
@@ -44,7 +44,7 @@ class Task(commands.Cog):
             print(e)
 
     @commands.command(name='end_task',
-                description="Saves a quote.",
+                description='Ends all tasks.',
                 pass_context=True)
     async def end_task(self, context, args):
         try:
@@ -57,7 +57,7 @@ def lookupTasks():
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT name FROM task")
+        c.execute('SELECT name FROM task')
         result = c.fetchall()
         conn.close()
         tasks = []
@@ -71,7 +71,7 @@ def lookupTask(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT description FROM task WHERE name = (?)", (args,))
+        c.execute('SELECT description FROM task WHERE name = (?)', (args,))
         result = c.fetchall()
         conn.close()
         return result[0][0]
@@ -84,7 +84,7 @@ def addTask(args):
         desc =  ' '.join(args[1:])
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("INSERT INTO task VALUES (?,?)", (name,desc,))
+        c.execute('INSERT INTO task VALUES (?,?)', (name,desc,))
         conn.commit()
         conn.close()
         return 'Task added.'
@@ -95,14 +95,12 @@ def endTask(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("DELETE FROM task WHERE name = (?)", (args,))
+        c.execute('DELETE FROM task WHERE name = (?)', (args,))
         conn.commit()
         conn.close()
         return "Task ended"
     except Exception as e:
         print(e)
-
-
 
 
 def setup(client):

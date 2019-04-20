@@ -12,8 +12,8 @@ startup_extensions = ["quote", "users", "task", "admin"]
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=Game(name=" Bobby Newport in P&R"))
-    print("Logged in as " + client.user.name)
+    await client.change_presence(activity=Game(name='Bobby Newport in P&R'))
+    print('Logged in as ' + client.user.name)
     users.refresh_users(client)
 
 @client.event

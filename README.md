@@ -32,6 +32,7 @@ This bot is part of a personal project to become better about applying coding kn
 - Pin comments
 - Name requirement enforcement
 - On user join, add user to the user list if they arent already there.
+- Style made a bit more consistent.
 
 
 ### Features To Implement
@@ -51,7 +52,6 @@ This bot is part of a personal project to become better about applying coding kn
 - Speed up '$scores' function
   - It only sends 6 messages at once and waits a few seconds to send more.
   - I think this might just be a limitation in discord.
-- Fix styling so things are more consistent
 
 
 

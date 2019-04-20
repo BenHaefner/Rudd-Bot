@@ -12,7 +12,7 @@ class Users(commands.Cog):
         self.client = client
 
     @commands.command(name='score',
-                description="Get a persons score.",
+                description='Get a persons score.',
                 pass_context=True)
     async def score(self, context, *args):
         try:
@@ -25,7 +25,7 @@ class Users(commands.Cog):
             print(e)
 
     @commands.command(name='++',
-                description="Get a persons score.",
+                description='Increase a persons score.',
                 pass_context=True)
     async def inc(self, context, *args):
         try:
@@ -42,7 +42,7 @@ class Users(commands.Cog):
             print(e)
     
     @commands.command(name='--',
-                description="Get a persons score.",
+                description='Decrease a persons score.',
                 pass_context=True)
     async def dec(self, context, *args):
         try:
@@ -59,7 +59,7 @@ class Users(commands.Cog):
             print(e)
 
     @commands.command(name='scores',
-                description="Get a persons score.",
+                description='Get all scores.',
                 pass_context=True)
     async def scores(self, context):
         try:
@@ -82,7 +82,7 @@ def refresh_users(client):
                 if memberid not in users:
                     conn = sqlite3.connect('rudd.db')
                     c = conn.cursor()
-                    c.execute("INSERT INTO users VALUES (?,?,?)", (memberid,0,membername.replace('@','')))
+                    c.execute('INSERT INTO users VALUES (?,?,?)', (memberid,0,membername.replace('@','')))
                     conn.commit()
                     conn.close()
     except Exception as e:
@@ -93,7 +93,7 @@ def get_users():
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT user FROM users")
+        c.execute('SELECT user FROM users')
         result = c.fetchall()
         conn.close()
         user = []
@@ -107,7 +107,7 @@ def get_all_scores():
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT * FROM users")
+        c.execute('SELECT * FROM users')
         result = c.fetchall()
         conn.close()
         return result
@@ -118,7 +118,7 @@ def get_users_score(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT score FROM users WHERE user = (?)", (args,))
+        c.execute('SELECT score FROM users WHERE user = (?)', (args,))
         result = c.fetchone()
         conn.close()
         return result[0]
@@ -129,10 +129,10 @@ def increment(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT score FROM users WHERE user = (?)", (args,))
+        c.execute('SELECT score FROM users WHERE user = (?)', (args,))
         result = int(c.fetchone()[0])
         result = result + 1
-        c.execute("UPDATE users SET score = ? WHERE user = ?", (result, args,))
+        c.execute('UPDATE users SET score = ? WHERE user = ?', (result, args,))
         conn.commit()
         conn.close()
         return 'The score of ' + str(args) + ' is ' + str(result)
@@ -143,10 +143,10 @@ def decrement(args):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT score FROM users WHERE user = (?)", (args,))
+        c.execute('SELECT score FROM users WHERE user = (?)', (args,))
         result = int(c.fetchone()[0])
         result = result - 1
-        c.execute("UPDATE users SET score = ? WHERE user = ?", (result, args,))
+        c.execute('UPDATE users SET score = ? WHERE user = ?', (result, args,))
         conn.commit()
         conn.close()
         return 'The score of ' + str(args) + ' is ' + str(result)
@@ -157,7 +157,7 @@ def get_name_from_id(id):
     try:
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
-        c.execute("SELECT name FROM users WHERE user = (?)", (id,))
+        c.execute('SELECT name FROM users WHERE user = (?)', (id,))
         result = c.fetchone()[0]
         conn.close()
         return result
