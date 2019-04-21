@@ -1,7 +1,9 @@
-import asyncio, config, discord, sqlite3
+import asyncio, config, discord, sqlite3, datetime
 import cogs.users as users
 from discord import Game
 from discord.ext.commands import Bot
+from threading import Lock
+
 
 BOT_PREFIX = ("$")
 TOKEN = config.Token()
@@ -11,6 +13,7 @@ client = Bot(command_prefix=BOT_PREFIX)
 startup_extensions = ["quote", "users", "task", "admin"]
 
 last_updated_member = discord.Member
+member_lock = Lock()
 
 @client.event
 async def on_ready():
@@ -28,22 +31,26 @@ async def on_member_join(member):
 @client.event
 async def on_member_update(before, after):
     try:
-        global last_updated_member
-        if(last_updated_member.name != before.name or last_updated_member.activity != before.activity):
+        with member_lock:
+            global last_updated_member
             if(before.activity is not None):
-                if(type(before.activity) is discord.Spotify):
-                    print(before.activity.title)
-                elif(type(before.activity) is discord.Game):
-                    print(before.activity.name)
-                elif(type(before.activity) is discord.Streaming):
-                    print('Is Streaming')
-                elif(type(before.activity) is discord.Activity):
-                    print(before.activity.name)
-                else:
-                    print(before.activity)
+                if(type(before.activity) is not discord.Spotify and type(last_updated_member.activity) is not discord.Spotify or type(before.activity) is not discord.Streaming and type(last_updated_member.activity) is not discord.Streaming):
+                    if(last_updated_member.name != before.name or last_updated_member.activity.name != before.activity.name):
+                        if(type(before.activity) is discord.Game):
+                            print(before.name + ': ' + before.activity.name + ' ' + str(datetime.datetime.now()))
+                        elif(type(before.activity) is discord.Activity):
+                            print(before.name + ': ' + before.activity.name + ' ' + str(datetime.datetime.now()))
+                        else:
+                            print(before.activity)
+                if(type(before.activity) is discord.Spotify and type(last_updated_member.activity) is discord.Spotify):
+                    if(before.activity.title != last_updated_member.activity.title):
+                        print(before.name + ': ' + before.activity.title + ' ' + str(datetime.datetime.now()))
+                elif(type(before.activity) is discord.Spotify):
+                    print(before.name + ': ' + before.activity.title + ' ' + str(datetime.datetime.now()))
+                last_updated_member = before
+    except Exception as e:
         last_updated_member = before
-    except:
-        last_updated_member = before
+        print(e)
 
 for extension in startup_extensions:
     try:
