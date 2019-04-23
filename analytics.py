@@ -8,7 +8,7 @@ def delete_and_insert(id, title):
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
     c.execute('DELETE FROM played_activity WHERE id = ?',(id,))
-    c.execute('INSERT INTO played_activity VALUES (?,?)',(id,title,now,))
+    c.execute('INSERT INTO played_activity VALUES (?,?,?)',(id,title,now,))
     conn.commit()
     conn.close()
 
