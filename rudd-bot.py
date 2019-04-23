@@ -1,4 +1,4 @@
-import asyncio, config, discord, sqlite3, datetime
+import asyncio, config, discord, sqlite3, datetime, analytics
 import cogs.users as users
 from discord import Game
 from discord.ext.commands import Bot
@@ -34,19 +34,26 @@ async def on_member_update(before, after):
         with member_lock:
             global last_updated_member
             if(before.activity is not None):
+                previous_activity = analytics.check_last_game_time(before.id)
                 if(type(before.activity) is not discord.Spotify and type(last_updated_member.activity) is not discord.Spotify or type(before.activity) is not discord.Streaming and type(last_updated_member.activity) is not discord.Streaming):
                     if(last_updated_member.name != before.name or last_updated_member.activity.name != before.activity.name):
-                        if(type(before.activity) is discord.Game):
-                            print(before.name + ': ' + before.activity.name + ' ' + str(datetime.datetime.now()))
-                        elif(type(before.activity) is discord.Activity):
-                            print(before.name + ': ' + before.activity.name + ' ' + str(datetime.datetime.now()))
-                        else:
-                            print(before.activity)
+                        if(previous_activity[1] == before.activity.name and (datetime.datetime.now() - previous_activity[2]) or previous_activity[1] != before.activity.name):
+                            if(type(before.activity) is discord.Game):
+                                print(before.name + ': ' + before.activity.name + ' ' + str(datetime.datetime.now()))
+                            elif(type(before.activity) is discord.Activity):
+                                print(before.name + ': ' + before.activity.name + ' ' + str(datetime.datetime.now()))
+                            else:
+                                print(before.activity)                            
+                        analytics.delete_and_insert(before.id, before.activity.name)
                 if(type(before.activity) is discord.Spotify and type(last_updated_member.activity) is discord.Spotify):
                     if(before.activity.title != last_updated_member.activity.title):
-                        print(before.name + ': ' + before.activity.title + ' ' + str(datetime.datetime.now()))
+                        if(previous_activity[1] == before.activity.title and (datetime.datetime.now() - previous_activity[2]) or previous_activity[1] != before.activity.title):
+                            print(before.name + ': ' + before.activity.title + ' ' + str(datetime.datetime.now()))
+                        analytics.delete_and_insert(before.id, before.activity.title)
                 elif(type(before.activity) is discord.Spotify):
-                    print(before.name + ': ' + before.activity.title + ' ' + str(datetime.datetime.now()))
+                    if(previous_activity[1] == before.activity.title and (datetime.datetime.now() - previous_activity[2]) or previous_activity[1] != before.activity.title):
+                        print(before.name + ': ' + before.activity.title + ' ' + str(datetime.datetime.now()))
+                    analytics.delete_and_insert(before.id, before.activity.title)
                 last_updated_member = before
     except Exception as e:
         last_updated_member = before
