@@ -36,17 +36,17 @@ def insert_new_game(name):
     conn.commit()
     conn.close()
 
-def update_song(title):
+def update_song(title, artist):
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
-    c.execute('UPDATE played_songs SET count = count + 1 WHERE name = ?',(title,))
+    c.execute('UPDATE played_songs SET count = count + 1 WHERE title = ? AND artist = ?',(title, artist,))
     conn.commit()
     conn.close()
 
 def update_game(game):
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
-    c.execute('UPDATE played_games SET count = count + 1 WHERE name = ?',(game,))
+    c.execute('UPDATE played_games SET count = count + 1 WHERE name = ? ',(game,))
     conn.commit()
     conn.close()
 
@@ -56,12 +56,18 @@ def check_for_game(name):
     c.execute('SELECT * FROM played_games WHERE name = ?',(name,))
     result = c.fetchone()
     conn.close()
-    return result
+    if result is None:
+        return False
+    else:
+        return True
 
-def check_for_song(title):
+def check_for_song(title, artist):
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
-    c.execute('SELECT * FROM played_songs WHERE name = ?',(title,))
+    c.execute('SELECT * FROM played_songs WHERE title = ? AND artist = ?',(title,artist,))
     result = c.fetchone()
     conn.close()
-    return result
+    if result is None:
+        return False
+    else:
+        return True
