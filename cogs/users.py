@@ -64,9 +64,11 @@ class Users(commands.Cog):
     async def scores(self, context):
         try:
             allScores = get_all_scores()
+            to_send = ''
             for scores in allScores:
                 if '<' in scores[0]:
-                    await context.message.channel.send(str(scores[2]) + ': ' + str(scores[1]))
+                    to_send += str(scores[2]) + ': ' + str(scores[1]) + '\n'
+            await context.message.channel.send(to_send)
         except Exception as e:
             await context.message.channel.send('Could not get that score')
             print(e)

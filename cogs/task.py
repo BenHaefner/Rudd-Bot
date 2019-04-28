@@ -37,8 +37,10 @@ class Task(commands.Cog):
     async def list_tasks(self, context):
         try:
             tasks = lookup_tasks()   
+            to_send = ''
             for task in tasks:
-                await context.message.channel.send(task)
+                to_send += task + '\n'
+            await context.message.channel.send(to_send)
         except Exception as e:
             await context.message.channel.send('Task could not be retrieved.')
             print(e)

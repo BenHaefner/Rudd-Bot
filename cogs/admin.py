@@ -39,8 +39,10 @@ class Admin(commands.Cog):
     async def commands(self, context):
         try:
             texts = commands_text()
+            to_send = ''
             for text in texts:
-                await context.message.channel.send(text)
+                to_send += text + '\n'
+            await context.message.channel.send(to_send)
         except Exception as e:
             await context.message.channel.send('Could not get commands')
             print(e)

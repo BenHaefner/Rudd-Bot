@@ -12,9 +12,10 @@ class Analyze(commands.Cog):
     async def songs(self, context):
         try:
             top_five = top_songs()
+            to_send = ''
             for item in top_five:
-                await context.message.channel.send(item[0] + ' by ' + item[1] + ': ' + str(item[2]))
-
+                to_send += item[0] + ' by ' + item[1] + ': ' + str(item[2]) + '\n'
+            await context.message.channel.send(to_send)
         except Exception as e:
             await context.message.channel.send("Something went wrong")
             print(e)
@@ -25,9 +26,10 @@ class Analyze(commands.Cog):
     async def games(self, context):
         try:
             top_five = top_games()
+            to_send = ''
             for item in top_five:
-                await context.message.channel.send(item[0] + ': ' + str(item[1]))
-
+                to_send += item[0] + ': ' + str(item[1]) + '\n'
+            await context.message.channel.send(to_send)
         except Exception as e:
             await context.message.channel.send("Something went wrong")
             print(e)
