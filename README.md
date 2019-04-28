@@ -21,6 +21,8 @@ This bot is part of a personal project to become better about applying coding kn
 - $list_tasks: Lists all the task keywords.
 - $end_task `keyword`: Deletes the task associated with a keyword.
 - $pin: Pins the last comment. Requires 'manage messages' permissions.
+- $games: Lists the top 5 games on a server
+- $songs: Lists the top 5 games on a server
 
 
 ## Work
@@ -33,13 +35,14 @@ This bot is part of a personal project to become better about applying coding kn
 - Name requirement enforcement
 - On user join, add user to the user list if they arent already there.
 - Style made a bit more consistent.
+- Server analytics
+
 
 
 ### Features To Implement
 - More "Paul Rudd"-esque interations
 - Quote numbering
   - Optional for now
-- Server analytics
 - Server-based games (Family Fued)
 - Ensure database associated people, tasks, scores, and anything else with specific servers. 
    - Optional for now
