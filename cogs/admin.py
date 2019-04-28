@@ -62,7 +62,9 @@ def commands_text():
         , 'lookup_task -keyword-: Gets text associated with keyword'
         , 'list_tasks: Lists all keywords of tasks'
         , 'end_task -keyword-: Deletes task associated with keyword'
-        , 'pin: Pins the last comment']
+        , 'pin: Pins the last comment'
+        , 'games: Gets a list of top 5 games on the server'
+        , 'songs: Gets a list of the top 5 spotify songs on the server']
 
 def setup(client):
     client.add_cog(Admin(client))
