@@ -10,7 +10,7 @@ TOKEN = config.Token()
 
 client = Bot(command_prefix=BOT_PREFIX)
 
-startup_extensions = ["quote", "users", "task", "admin"]
+startup_extensions = ['quote', 'users', 'task', 'admin', 'analyze']
 
 last_updated_member = discord.Member
 member_lock = Lock()
