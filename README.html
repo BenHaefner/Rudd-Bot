@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>Rudd-Bot</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="rudd-bot">Rudd-Bot</h1>
+<p>A Discord bot to do various tasks on my discord server, themed loosley around the actor Paul Rudd.</p>
+<p>This bot is partially based on <a href="https://github.com/crypticism/dxbot2.0">dxbot</a>, a bot developed for use in Slack. This bot is able to retain quotes from people in the chat as well as score users. Rudd-Bot's implementation of these features are slightly different. Additionally I was interested in adding in more functionality on top of that enabled by dxbot.</p>
+<p>This bot is part of a personal project to become better about applying coding knowledge and skills to improve my every day life and make something to benefit myself and my friends.</p>
+<h2 id="commands">Commands</h2>
+<ul>
+<li>$commands: Gets a list of commands</li>
+<li>$quote: Gets a random quote from the quote database.</li>
+<li>$quote <code>mention</code> <code>text</code>: Adds a quote to the database attibuted to a specific person.</li>
+<li>$grab: Adds the last message sent before this command to the quote database.</li>
+<li>$lookup <code>mention</code>: Gets a random quote from the quote database attributed to the user mentioned.</li>
+<li>$score <code>mention</code>: Retrieves the score of a specific user.</li>
+<li>$++ <code>mention</code>: Increases the score of a specific user by one.</li>
+<li>$-- <code>mention</code>: Decreases the score of a specific user by one.</li>
+<li>$scores: Gets a list of scores for everyone in the database.</li>
+<li>$add_task <code>keyword</code> <code>text</code>: Adds a task to the database accessible through the keyword.</li>
+<li>$lookup_task <code>keyword</code>: Gets the text associated with a task.</li>
+<li>$list_tasks: Lists all the task keywords.</li>
+<li>$end_task <code>keyword</code>: Deletes the task associated with a keyword.</li>
+<li>$pin: Pins the last comment. Requires 'manage messages' permissions.</li>
+<li>$games: Lists the top 5 games on a server</li>
+<li>$songs: Lists the top 5 games on a server</li>
+</ul>
+<h2 id="work">Work</h2>
+<h3 id="features-complete">Features Complete</h3>
+<ul>
+<li>Quote saving and selection
+<ul>
+<li>Using SQL</li>
+</ul>
+</li>
+<li>User scoring system</li>
+<li>The ability to store &quot;tasks&quot; and retrieve those tasks based on a single word key.</li>
+<li>Pin comments</li>
+<li>Name requirement enforcement</li>
+<li>On user join, add user to the user list if they arent already there.</li>
+<li>Style made a bit more consistent.</li>
+<li>Server analytics</li>
+</ul>
+<h3 id="features-to-implement">Features To Implement</h3>
+<ul>
+<li>More &quot;Paul Rudd&quot;-esque interations</li>
+<li>Quote numbering
+<ul>
+<li>Optional for now</li>
+</ul>
+</li>
+<li>Server-based games (Family Fued)</li>
+<li>Ensure database associated people, tasks, scores, and anything else with specific servers.
+<ul>
+<li>Optional for now</li>
+</ul>
+</li>
+<li>A &quot;Thanos&quot; feature for fun.
+<ul>
+<li>Users will complete 6 challenges and when they do they will be able to mute half the server at random temporarily.</li>
+</ul>
+</li>
+</ul>
+<h3 id="other-maintence">Other Maintence</h3>
+<ul>
+<li>Comment everything</li>
+</ul>
+
+    </body>
+    </html>
