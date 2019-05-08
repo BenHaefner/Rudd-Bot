@@ -2,7 +2,7 @@ import random, re, discord, sqlite3, cogs.users
 from discord.ext import commands
 
 # table: task
-# Columns: name, description
+# Columns: name, description 
 
 
 class Task(commands.Cog):
