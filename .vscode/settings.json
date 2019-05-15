@@ -2,5 +2,11 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": false,
-    "sqltools.connections": []
+    "sqltools.connections": [],
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
 }

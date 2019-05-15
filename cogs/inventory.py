@@ -9,7 +9,7 @@ class Inventory(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='item',
+    @commands.command(name='add_item',
                 description='Add item to the group inventory.',
                 pass_context=True)
     async def add_item(self, context, *args):
@@ -19,7 +19,17 @@ class Inventory(commands.Cog):
             await context.message.channel.send('Item could not be added for some reason...')
             print(e)
 
-    @commands.command(name='list_items',
+    @commands.command(name='use_item',
+                description='Reduce item to the group inventory.',
+                pass_context=True)
+    async def use_item(self, context, *args):
+        try:
+            await context.message.channel.send(reduce_item(args))
+        except Exception as e:
+            await context.message.channel.send('Item could not be reduced for some reason...')
+            print(e)
+
+    @commands.command(name='items',
                 description='List all items in inventory.',
                 pass_context=True)
     async def get_items(self, context):
@@ -41,14 +51,27 @@ class Inventory(commands.Cog):
 
 def item(args):
     if(check_for_item(args)):
-        update_item(args)
+        return update_item(args)
     else:
-        insert_item(args)
+        return insert_item(args)
+
+def reduce_item(args):
+    try:
+        item = ' '.join(args[:-1])
+        quantity =  int(args[-1])
+        conn = sqlite3.connect('rudd.db')
+        c = conn.cursor()
+        c.execute('UPDATE inventory SET quantity = quantity - ? WHERE item = ?', (quantity,item,))
+        conn.commit()
+        conn.close()
+        return 'Item reduced.'
+    except Exception as e:
+        print(e)
 
 def update_item(args):
     try:
         item = ' '.join(args[:-1])
-        quantity =  args[:-1]
+        quantity =  int(args[-1])
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute('UPDATE inventory SET quantity = quantity + ? WHERE item = ?', (quantity,item,))
@@ -61,7 +84,8 @@ def update_item(args):
 def insert_item(args):
     try:
         item = ' '.join(args[:-1])
-        quantity =  args[:-1]
+        print(args[-1])
+        quantity =  int(args[-1])
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute('INSERT INTO inventory VALUES (?,?)',(item,quantity,))
