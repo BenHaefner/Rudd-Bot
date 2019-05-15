@@ -19,6 +19,26 @@ class Inventory(commands.Cog):
             await context.message.channel.send('Item could not be added for some reason...')
             print(e)
 
+    @commands.command(name='list_items',
+                description='List all items in inventory.',
+                pass_context=True)
+    async def get_items(self, context):
+        try:
+            await context.message.channel.send(get_item_list())
+        except Exception as e:
+            await context.message.channel.send('Items could not be retrieved.')
+            print(e)
+
+    @commands.command(name='clean_items',
+                description='Remove all items from inventory with Quantity Zero.',
+                pass_context=True)
+    async def clean_items(self, context):
+        try:
+            await context.message.channel.send(cleanup())
+        except Exception as e:
+            await context.message.channel.send('Items could not be cleaned.')
+            print(e)
+
 def item(args):
     if(check_for_item(args)):
         update_item(args)
@@ -52,16 +72,41 @@ def insert_item(args):
         print(e)
 
 def check_for_item(args):
-    item = ' '.join(args[:-1])
+    try:
+        item = ' '.join(args[:-1])
+        conn = sqlite3.connect('rudd.db')
+        c = conn.cursor()
+        c.execute('SELECT * FROM inventory WHERE item = ?',(item,))
+        result = c.fetchone()
+        conn.close()
+        if result is None:
+            return False
+        else:
+            return True
+    except Exception as e:
+        print(e)
+
+def get_item_list():
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
-    c.execute('SELECT * FROM inventory WHERE item = ?',(item,))
-    result = c.fetchone()
+    c.execute('SELECT * FROM inventory')
+    result = c.fetchall()
     conn.close()
-    if result is None:
-        return False
-    else:
-        return True
+    result_string = 'Items in Party Inventory:\n'
+    for item in result:
+        result_string += str(item[0]) +', Quantity: ' + str(item[1]) +'\n'
+    return result_string
+
+def cleanup():
+    try:
+        conn = sqlite3.connect('rudd.db')
+        c = conn.cursor()
+        c.execute('DELETE FROM inventory WHERE quantity <= 0')
+        conn.commit()
+        conn.close()
+        return 'Items cleaned'
+    except Exception as e:
+        print(e)
 
 def setup(client):
     client.add_cog(Inventory(client))
