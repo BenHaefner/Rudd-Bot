@@ -13,11 +13,18 @@ class Inventory(commands.Cog):
                 description='Add item to the group inventory.',
                 pass_context=True)
     async def add_item(self, context, *args):
-        try:
-            await context.message.channel.send(item(args))
-        except Exception as e:
-            await context.message.channel.send('Item could not be added for some reason...')
-            print(e)
+        if(check_for_item(args)):
+            try:
+                await context.message.channel.send(item(args))
+            except Exception as e:
+                await context.message.channel.send('Item could not be added for some reason...')
+                print(e)
+        else:
+            try:
+                await context.message.channel.send(item(args))
+            except Exception as e:
+                await context.message.channel.send('Item could not be added for some reason...')
+                print(e)
 
     @commands.command(name='use_item',
                 description='Reduce item to the group inventory.',
@@ -49,6 +56,13 @@ class Inventory(commands.Cog):
             await context.message.channel.send('Items could not be cleaned.')
             print(e)
 
+def check_if_string(args):
+    try:
+        int(args[-1])
+        return True
+    except Exception:
+        return False
+
 def item(args):
     if(check_for_item(args)):
         return update_item(args)
@@ -56,44 +70,82 @@ def item(args):
         return insert_item(args)
 
 def reduce_item(args):
-    try:
-        item = ' '.join(args[:-1])
-        quantity =  int(args[-1])
-        conn = sqlite3.connect('rudd.db')
-        c = conn.cursor()
-        c.execute('UPDATE inventory SET quantity = quantity - ? WHERE item = ?', (quantity,item,))
-        conn.commit()
-        conn.close()
-        return 'Item reduced.'
-    except Exception as e:
-        print(e)
+    dec = check_if_string(args)
+    if(dec):
+        try:
+            item = ' '.join(args[:-1])
+            quantity =  int(args[-1])
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('UPDATE inventory SET quantity = quantity - ? WHERE item = ?', (quantity,item,))
+            conn.commit()
+            conn.close()
+            return 'Item reduced.'
+        except Exception as e:
+            print(e)
+    else:
+        try:
+            item = ' '.join(args)
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('UPDATE inventory SET quantity = quantity - ? WHERE item = ?', (1,item,))
+            conn.commit()
+            conn.close()
+            return 'Item reduced.'
+        except Exception as e:
+            print(e)
 
 def update_item(args):
-    try:
-        item = ' '.join(args[:-1])
-        quantity =  int(args[-1])
-        conn = sqlite3.connect('rudd.db')
-        c = conn.cursor()
-        c.execute('UPDATE inventory SET quantity = quantity + ? WHERE item = ?', (quantity,item,))
-        conn.commit()
-        conn.close()
-        return 'Item updated.'
-    except Exception as e:
-        print(e)
+    inc = check_if_string(args)
+    if(inc):
+        try:
+            item = ' '.join(args[:-1])
+            quantity =  int(args[-1])
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('UPDATE inventory SET quantity = quantity + ? WHERE item = ?', (quantity,item,))
+            conn.commit()
+            conn.close()
+            return 'Item updated.'
+        except Exception as e:
+            print(e)
+    else:
+        try:
+            item = ' '.join(args)
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('UPDATE inventory SET quantity = quantity + ? WHERE item = ?', (1,item,))
+            conn.commit()
+            conn.close()
+            return 'Item updated.'
+        except Exception as e:
+            print(e)
 
 def insert_item(args):
-    try:
-        item = ' '.join(args[:-1])
-        print(args[-1])
-        quantity =  int(args[-1])
-        conn = sqlite3.connect('rudd.db')
-        c = conn.cursor()
-        c.execute('INSERT INTO inventory VALUES (?,?)',(item,quantity,))
-        conn.commit()
-        conn.close()
-        return 'Item added'
-    except Exception as e:
-        print(e)
+    inc = check_if_string(args)
+    if(inc):
+        try:
+            item = ' '.join(args[:-1])
+            quantity =  int(args[-1])
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('INSERT INTO inventory VALUES (?,?)',(item,quantity,))
+            conn.commit()
+            conn.close()
+            return 'Item added'
+        except Exception as e:
+            print(e)
+    else:
+        try:
+            item = ' '.join(args)
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('INSERT INTO inventory VALUES (?,?)',(item,1,))
+            conn.commit()
+            conn.close()
+            return 'Item added'
+        except Exception as e:
+            print(e)
 
 def check_for_item(args):
     try:
