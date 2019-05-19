@@ -11,6 +11,7 @@ class Inventory(commands.Cog):
 
     @commands.command(name='add_item',
                 description='Add item to the group inventory.',
+                aliases=['item'],
                 pass_context=True)
     async def add_item(self, context, *args):
         if(check_for_item(args)):
