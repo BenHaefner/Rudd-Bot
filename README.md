@@ -23,6 +23,13 @@ This bot is part of a personal project to become better about applying coding kn
 - $pin: Pins the last comment. Requires 'manage messages' permissions.
 - $games: Lists the top 5 games on a server
 - $songs: Lists the top 5 games on a server
+- $item `item name` `optional quantity`: Add an item to party inventory
+- $items: List all items in party inventory
+- $use_item `item name` `optional quantity`: Reduce item.
+- $clean_items: Remove all items with quantity 0 from the database.
+- $cash: List all money in party inventory
+- $spend `type name` `optional quantity`: Reduce quantity of money type.
+- $deposit `type name` `optional quantity`: Increase the quantity of money type.
 
 
 ## Work
@@ -36,7 +43,7 @@ This bot is part of a personal project to become better about applying coding kn
 - On user join, add user to the user list if they arent already there.
 - Style made a bit more consistent.
 - Server analytics
-
+- DnD Inventory and Cash Management
 
 
 ### Features To Implement
