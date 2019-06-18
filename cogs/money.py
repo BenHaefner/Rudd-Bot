@@ -96,7 +96,7 @@ def update_balance(args):
             quantity =  int(args[-1])
             conn = sqlite3.connect('rudd.db')
             c = conn.cursor()
-            c.execute('UPDATE money SET quantity = quantity + ? WHERE item = ?', (quantity,cash,))
+            c.execute('UPDATE money SET quantity = quantity + ? WHERE type = ?', (quantity,cash,))
             conn.commit()
             conn.close()
             return 'Balance updated.'
