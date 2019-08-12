@@ -150,12 +150,17 @@ def insert_item(args):
 
 def check_for_item(args):
     try:
-        item = ' '.join(args[:-1])
+        if check_if_string(args):
+            item = ' '.join(args[:-1])
+        else:
+            item = ' '.join(args)
+        print(item)
         conn = sqlite3.connect('rudd.db')
         c = conn.cursor()
         c.execute('SELECT * FROM inventory WHERE item = ?',(item,))
         result = c.fetchone()
         conn.close()
+        print(result)
         if result is None:
             return False
         else:
