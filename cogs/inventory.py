@@ -74,7 +74,10 @@ def reduce_item(args):
     dec = check_if_string(args)
     if(dec):
         try:
-            item = ' '.join(args[:-1])
+            if check_if_string(args):
+                item = ' '.join(args[:-1])
+            else:
+                item = ' '.join(args)
             quantity =  int(args[-1])
             conn = sqlite3.connect('rudd.db')
             c = conn.cursor()
