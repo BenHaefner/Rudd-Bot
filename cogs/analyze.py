@@ -1,4 +1,4 @@
-import discord, sqlite3
+import discord, sqlite3, analytics
 from discord.ext import commands
 
 class Analyze(commands.Cog):
@@ -34,6 +34,17 @@ class Analyze(commands.Cog):
             await context.message.channel.send("Something went wrong")
             print(e)
 
+    @commands.command(name='ban',
+                    description='Ban a game from appearing in analytics',
+                    pass_context=True)
+    async def ban(self, context, *args):
+        try:
+            msg = ' '.join(args)
+            await context.message.channel.send(ban_game(msg))
+        except Exception as e:
+            await context.message.channel('Couldnt ban for some reason.')
+            print(e)
+
 def top_games():
     conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
@@ -49,6 +60,21 @@ def top_songs():
     result = c.fetchall()
     conn.close()
     return result
+
+def ban_game(game):
+    try:
+        returnable = "The game already exists in the banned list."
+        banned = analytics.get_banned()
+        if(game not in banned):
+            conn = sqlite3.connect('rudd.db')
+            c = conn.cursor()
+            c.execute('INSERT INTO banned_games VALUES (?)', (game,))
+            conn.commit()
+            conn.close()
+            returnable = "Banned."
+        return returnable
+    except Exception as e:
+        print(e)
 
 def setup(client):
     client.add_cog(Analyze(client))

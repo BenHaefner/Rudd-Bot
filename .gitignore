@@ -5,3 +5,16 @@ quotes.db
 maintanence.py
 rudd.db
 servers.py
+cogs/__pycache__/admin.cpython-36.pyc
+cogs/__pycache__/analyze.cpython-36.pyc
+cogs/__pycache__/inventory.cpython-36.pyc
+cogs/__pycache__/money.cpython-36.pyc
+cogs/__pycache__/quote.cpython-36.pyc
+cogs/__pycache__/task.cpython-36.pyc
+cogs/__pycache__/users.cpython-36.pyc
+cogs/__pycache__/admin.cpython-36.pyc
+cogs/__pycache__/quote.cpython-36.pyc
+cogs/__pycache__/task.cpython-36.pyc
+cogs/__pycache__/users.cpython-36.pyc
+__pycache__/analytics.cpython-36.pyc
+*.pyc

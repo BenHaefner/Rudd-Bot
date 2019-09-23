@@ -39,34 +39,45 @@ async def on_member_update(before, after):
             with member_lock:
                 global last_updated_member
                 if(before.activity is not None):
-                    # Get last activity and timestamp for ensuring that the last activity they 
-                    # launched is not the same as this, or within a time window
-                    previous_activity = analytics.check_last_activity_time(before.id)
-                    timestamp = datetime.datetime.strptime(previous_activity[2], '%Y-%m-%d %H:%M:%S.%f')
-                    # Check if activity is not a spotify activity, or streaming.
-                    if(type(before.activity) is not discord.Spotify and type(last_updated_member.activity) is not discord.Spotify or type(before.activity) is not discord.Streaming and type(last_updated_member.activity) is not discord.Streaming):
-                        # Check that the activity or the last user is not the same as the last.
-                        if(last_updated_member.name != before.name or last_updated_member.activity.name != before.activity.name):
-                            # Ensure that the launching is not within the hour and a half window
-                            if(previous_activity[1] == before.activity.name and (datetime.datetime.now() - timestamp) > datetime.timedelta(minutes=120) or previous_activity[1] != before.activity.name):
-                                # Update the activity list
-                                if(type(before.activity) is discord.Game):
-                                    if(analytics.check_for_game(before.activity.name)):
-                                        analytics.update_game(before.activity.name)
+                    if(before.activity not in analytics.get_banned()):
+                        # Get last activity and timestamp for ensuring that the last activity they 
+                        # launched is not the same as this, or within a time window
+                        previous_activity = analytics.check_last_activity_time(before.id)
+                        timestamp = datetime.datetime.strptime(previous_activity[2], '%Y-%m-%d %H:%M:%S.%f')
+                        # Check if activity is not a spotify activity, or streaming.
+                        if(type(before.activity) is not discord.Spotify and type(last_updated_member.activity) is not discord.Spotify or type(before.activity) is not discord.Streaming and type(last_updated_member.activity) is not discord.Streaming):
+                            # Check that the activity or the last user is not the same as the last.
+                            if(last_updated_member.name != before.name or last_updated_member.activity.name != before.activity.name):
+                                # Ensure that the launching is not within the hour and a half window
+                                if(previous_activity[1] == before.activity.name and (datetime.datetime.now() - timestamp) > datetime.timedelta(minutes=120) or previous_activity[1] != before.activity.name):
+                                    # Update the activity list
+                                    if(type(before.activity) is discord.Game):
+                                        if(analytics.check_for_game(before.activity.name)):
+                                            analytics.update_game(before.activity.name)
+                                        else:
+                                            analytics.insert_new_game(before.activity.name)
+                                    elif(type(before.activity) is discord.Activity):
+                                        if(analytics.check_for_game(before.activity.name)):
+                                            analytics.update_game(before.activity.name)
+                                        else:
+                                            analytics.insert_new_game(before.activity.name)
+                                # Update last played game for user
+                                analytics.delete_and_insert_last_played(before.id, before.activity.name)
+                        # Because discord.py's nortmal activity API doesnt have a 'title' function , 
+                        # the elif block is necessary to properly record spotify song plays if last acticity isnt spotify.
+                        if(type(before.activity) is discord.Spotify and type(last_updated_member.activity) is discord.Spotify):
+                            # Check the song is different from the previous song.
+                            if(before.activity.title != last_updated_member.activity.title):
+                                # Ensure that the playing is not within the hour and a half window
+                                if(previous_activity[1] == before.activity.title and (datetime.datetime.now() - timestamp) > datetime.timedelta(minutes=120) or previous_activity[1] != before.activity.title):
+                                    # Update database
+                                    if(analytics.check_for_song(before.activity.title,before.activity.artist)):
+                                        analytics.update_song(before.activity.title,before.activity.artist)
                                     else:
-                                        analytics.insert_new_game(before.activity.name)
-                                elif(type(before.activity) is discord.Activity):
-                                    if(analytics.check_for_game(before.activity.name)):
-                                        analytics.update_game(before.activity.name)
-                                    else:
-                                        analytics.insert_new_game(before.activity.name)
-                            # Update last played game for user
-                            analytics.delete_and_insert_last_played(before.id, before.activity.name)
-                    # Because discord.py's nortmal activity API doesnt have a 'title' function , 
-                    # the elif block is necessary to properly record spotify song plays if last acticity isnt spotify.
-                    if(type(before.activity) is discord.Spotify and type(last_updated_member.activity) is discord.Spotify):
-                        # Check the song is different from the previous song.
-                        if(before.activity.title != last_updated_member.activity.title):
+                                        analytics.insert_new_song(before.activity.title,before.activity.artist)
+                                # Update last played song for user
+                                analytics.delete_and_insert_last_played(before.id, before.activity.title)
+                        elif(type(before.activity) is discord.Spotify):
                             # Ensure that the playing is not within the hour and a half window
                             if(previous_activity[1] == before.activity.title and (datetime.datetime.now() - timestamp) > datetime.timedelta(minutes=120) or previous_activity[1] != before.activity.title):
                                 # Update database
@@ -74,18 +85,8 @@ async def on_member_update(before, after):
                                     analytics.update_song(before.activity.title,before.activity.artist)
                                 else:
                                     analytics.insert_new_song(before.activity.title,before.activity.artist)
-                            # Update last played song for user
+                                # Update last played song for user
                             analytics.delete_and_insert_last_played(before.id, before.activity.title)
-                    elif(type(before.activity) is discord.Spotify):
-                        # Ensure that the playing is not within the hour and a half window
-                        if(previous_activity[1] == before.activity.title and (datetime.datetime.now() - timestamp) > datetime.timedelta(minutes=120) or previous_activity[1] != before.activity.title):
-                            # Update database
-                            if(analytics.check_for_song(before.activity.title,before.activity.artist)):
-                                analytics.update_song(before.activity.title,before.activity.artist)
-                            else:
-                                analytics.insert_new_song(before.activity.title,before.activity.artist)
-                            # Update last played song for user
-                        analytics.delete_and_insert_last_played(before.id, before.activity.title)
                     # Update last updated member
                     last_updated_member = before
     except Exception as e:

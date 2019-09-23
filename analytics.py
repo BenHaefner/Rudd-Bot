@@ -71,3 +71,17 @@ def check_for_song(title, artist):
         return False
     else:
         return True
+
+def get_banned():
+    try:
+        conn = sqlite3.connect('rudd.db')
+        c = conn.cursor()
+        c.execute('SELECT title FROM banned_games')
+        result = c.fetchall()
+        conn.close()
+        banned = []
+        for items in result:
+            banned.append(items[0])
+        return banned
+    except Exception as e:
+        print(e)

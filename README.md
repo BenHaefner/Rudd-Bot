@@ -21,9 +21,10 @@ This bot is part of a personal project to become better about applying coding kn
 - $list_tasks: Lists all the task keywords.
 - $end_task `keyword`: Deletes the task associated with a keyword.
 - $pin: Pins the last comment. Requires 'manage messages' permissions.
-- $games: Lists the top 5 games on a server
-- $songs: Lists the top 5 games on a server
-- $item `item name` `optional quantity`: Add an item to party inventory
+- $games: Lists the top 5 games on a server.
+- $songs: Lists the top 5 games on a server.
+- $ban `title`: Stops tracking game with the specified title.
+- $item `item name` `optional quantity`: Add an item to party inventory.
 - $items: List all items in party inventory
 - $use_item `item name` `optional quantity`: Reduce item.
 - $clean_items: Remove all items with quantity 0 from the database.
