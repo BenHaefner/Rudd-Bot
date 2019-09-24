@@ -81,7 +81,7 @@ def get_banned():
         conn.close()
         banned = []
         for items in result:
-            banned.append(items[0])
+            banned.append(items[0].lower())
         return banned
     except Exception as e:
         print(e)

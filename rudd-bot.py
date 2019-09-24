@@ -50,7 +50,7 @@ async def on_member_update(before, after):
                             # Ensure that the launching is not within the hour and a half window
                             if(previous_activity[1] == before.activity.name and (datetime.datetime.now() - timestamp) > datetime.timedelta(minutes=120) or previous_activity[1] != before.activity.name):
                                 # Update the activity list
-                                if(before.activity.name not in analytics.get_banned()):
+                                if(before.activity.name.lower() not in analytics.get_banned()):
                                     if(type(before.activity) is discord.Game):
                                         if(analytics.check_for_game(before.activity.name)):
                                             analytics.update_game(before.activity.name)

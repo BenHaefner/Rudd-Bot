@@ -65,7 +65,7 @@ def ban_game(game):
     try:
         returnable = "The game already exists in the banned list."
         banned = analytics.get_banned()
-        if(game not in banned):
+        if(game.lower() not in banned):
             conn = sqlite3.connect('rudd.db')
             c = conn.cursor()
             c.execute('INSERT INTO banned_games VALUES (?)', (game,))
