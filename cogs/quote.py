@@ -72,9 +72,11 @@ def add_quote(members, args):
         return 'Quote could not be added, please include a user'
     if user not in members:
         return 'That is not currently a member of this or any server I know.'
-    conn = sqlite3.connect('rudd.db')
     message = '"' + ' '.join(args.split()[1:]) + '"'
+    if message is '':
+        return 'That quote contained no message!'
     q = (user,message)
+    conn = sqlite3.connect('rudd.db')
     c = conn.cursor()
     c.execute('INSERT INTO quotes VALUES (?,?)', q)
     conn.commit()
